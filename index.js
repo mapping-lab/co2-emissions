@@ -9,7 +9,7 @@ var map = new mapboxgl.Map({
 
 var mapLayers = {
     'emission-by-country': ['2022-emission'],
-    'forests-land-use': ['forests-land use']
+    'forests-land-use': ['forests-land-use']
 };
 
 const popup = new mapboxgl.Popup({
