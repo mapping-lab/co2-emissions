@@ -26,7 +26,7 @@ map.on('load', () => {
     });
     console.log(features);
     
-    map.on('mousemove', '2022-emission-grid1grau-fill-copy-2', (e) => {
+    map.on('mousemove', '2022-emission', (e) => {
         console.log('mouse over');
         map.getCanvas().style.cursor = 'pointer';
         // console.log('A mousemove event has occurred.', e);
@@ -41,7 +41,7 @@ map.on('load', () => {
 
     });
 
-    map.on('mouseleave', '2022-emission-grid1grau-fill-copy-2', () => {
+    map.on('mouseleave', '2022-emission', () => {
         map.getCanvas().style.cursor = '';
         popup.remove();
         // map.setFilter('counties-highlighted', ['in', 'COUNTY', '']);
