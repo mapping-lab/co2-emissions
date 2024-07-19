@@ -8,7 +8,7 @@ var map = new mapboxgl.Map({
 });
 
 var mapLayers = {
-    'group0': ['forests-land-use', 'forests color-land-use'],
+    'group0': ['forests-land-use', 'forests-color-land-use'],
     'group1': ['2022-emission-grid1grau-l-copy-1', '2022-emission-grid1grau-fill-copy-1'],
     'group2': ['2022-emission-grid1grau-l-copy', '2022-emission-grid1grau-fill-copy'],
     'group3': ['2022-emission-grid1grau-l-copy-2', '2022-emission-grid1grau-fill-copy-2'],
