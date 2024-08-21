@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>v1 Annual CO₂ emissions, 2022 - Mapping Lab</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link rel="preconnect" href="https://rsms.me/">
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js"></script>
+<style>
+    @font-face {
+        font-family: 'Checkbox';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMg8SBD8AAAC8AAAAYGNtYXAYVtCJAAABHAAAAFRnYXNwAAAAEAAAAXAAAAAIZ2x5Zn4huwUAAAF4AAABYGhlYWQGPe1ZAAAC2AAAADZoaGVhB30DyAAAAxAAAAAkaG10eBBKAEUAAAM0AAAAHGxvY2EAmgESAAADUAAAABBtYXhwAAkALwAAA2AAAAAgbmFtZSC8IugAAAOAAAABknBvc3QAAwAAAAAFFAAAACAAAwMTAZAABQAAApkCzAAAAI8CmQLMAAAB6wAzAQkAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAABAAADoAgPA/8AAQAPAAEAAAAABAAAAAAAAAAAAAAAgAAAAAAADAAAAAwAAABwAAQADAAAAHAADAAEAAAAcAAQAOAAAAAoACAACAAIAAQAg6AL//f//AAAAAAAg6AD//f//AAH/4xgEAAMAAQAAAAAAAAAAAAAAAQAB//8ADwABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQAAAAAAAAAAAAIAADc5AQAAAAABAEUAUQO7AvgAGgAAARQHAQYjIicBJjU0PwE2MzIfAQE2MzIfARYVA7sQ/hQQFhcQ/uMQEE4QFxcQqAF2EBcXEE4QAnMWEP4UEBABHRAXFhBOEBCoAXcQEE4QFwAAAAABAAABbgMlAkkAFAAAARUUBwYjISInJj0BNDc2MyEyFxYVAyUQEBf9SRcQEBAQFwK3FxAQAhJtFxAQEBAXbRcQEBAQFwAAAAABAAAASQMlA24ALAAAARUUBwYrARUUBwYrASInJj0BIyInJj0BNDc2OwE1NDc2OwEyFxYdATMyFxYVAyUQEBfuEBAXbhYQEO4XEBAQEBfuEBAWbhcQEO4XEBACEm0XEBDuFxAQEBAX7hAQF20XEBDuFxAQEBAX7hAQFwAAAQAAAAIAAHRSzT9fDzz1AAsEAAAAAADRsdR3AAAAANGx1HcAAAAAA7sDbgAAAAgAAgAAAAAAAAABAAADwP/AAAAEAAAAAAADuwABAAAAAAAAAAAAAAAAAAAABwQAAAAAAAAAAAAAAAIAAAAEAABFAyUAAAMlAAAAAAAAAAoAFAAeAE4AcgCwAAEAAAAHAC0AAQAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAOAK4AAQAAAAAAAQAIAAAAAQAAAAAAAgAHAGkAAQAAAAAAAwAIADkAAQAAAAAABAAIAH4AAQAAAAAABQALABgAAQAAAAAABgAIAFEAAQAAAAAACgAaAJYAAwABBAkAAQAQAAgAAwABBAkAAgAOAHAAAwABBAkAAwAQAEEAAwABBAkABAAQAIYAAwABBAkABQAWACMAAwABBAkABgAQAFkAAwABBAkACgA0ALBDaGVja2JveABDAGgAZQBjAGsAYgBvAHhWZXJzaW9uIDIuMABWAGUAcgBzAGkAbwBuACAAMgAuADBDaGVja2JveABDAGgAZQBjAGsAYgBvAHhDaGVja2JveABDAGgAZQBjAGsAYgBvAHhSZWd1bGFyAFIAZQBnAHUAbABhAHJDaGVja2JveABDAGgAZQBjAGsAYgBvAHhGb250IGdlbmVyYXRlZCBieSBJY29Nb29uLgBGAG8AbgB0ACAAZwBlAG4AZQByAGEAdABlAGQAIABiAHkAIABJAGMAbwBNAG8AbwBuAC4AAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA)
+        format('truetype');
+    }
+    :root {
+        font-family: Inter, sans-serif;
+        font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
+    }
+    @supports (font-variation-settings: normal) {
+        :root { font-family: InterVariable, sans-serif; }
+    }
+    body { 
+        margin: 0;
+        padding: 0;
+    }
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+    #key {
+        position: absolute;
+        color: #444;
+        /* border: 1px solid #eee; */
+        border-radius: 4px;
+        background-color: #fff;
+        left: 30px;
+        bottom: 30px;
+        width: 300px;
+        /* height: 200px; */
+        padding: 30px;
+    }
+    #key h1 {
+        font-weight: 200;
+        margin: 0;
+        font-size: 1.2rem;
+        line-height: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+    #key h2 {
+        font-weight: 200;
+        font-size: 0.85rem;
+        line-height: 0.85rem;
+        margin: 1.5rem 0 0.5rem;
+    }
+    #key .content {}
+    #key .content ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    #key .content ul li a, 
+    #key .content ul li a:hover,
+    #key .content ul li a:visited,
+    #key .content ul li a:active {
+        text-decoration: none;
+        color: inherit;
+    }
+    #key .content ul li {
+        font-weight: 200;
+        margin: 0;
+        margin-bottom: 0.25rem;
+        padding: 0;        
+        font-size: 0.95rem;
+        line-height: 0.95rem;
+    }
+    #key .content ul.sources li {
+            /* margin-left: 1rem; */
+            /* list-style: circle; */
+    }
+    #key .content ul.sources li {
+        line-height: 0.75rem;
+        font-size: 0.75rem;
+        margin-bottom: 0.35rem;
+    }
+    #key .content ul li span {
+        display: inline-block;
+        background-color: #fff;
+        width: 1rem;
+        height: 1rem;
+        vertical-align: middle;
+        margin-right: 0.5rem;
+        line-height: 2rem;
+        border-radius: 2px;
+        border: 1px solid #111;
+    }
+    #key .content ul li .active span:after {
+        font-family: Checkbox;
+        content: '\e800';
+        position: relative;
+        font-size: 1rem;
+        top: -0.5rem;
+        left: 0rem;
+        width: 17px;
+        height: 17px;
+        text-align: center;
+        color: #111;
+    }
+    .mapboxgl-popup {
+        /* min-width: 100px; */
+        max-width: 400px;
+    }
+</style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="key">
+        <div class="content">
+            <h1>Annual CO₂ emissions, 2022</h1>
+            <ul>
+                <li class="layer-toggle"><a class="active" id="group0" href="#"><span></span>Forests</a></li>
+                <li class="layer-toggle"><a class="" id="group1" href="#"><span></span>Hexagonal grid 0,5 degree</a></li>
+                <li class="layer-toggle"><a class="" id="group2" href="#"><span></span>Hexagonal grid 1 degree</a></li>
+                <li class="layer-toggle"><a class="active" id="group3" href="#"><span></span>Regular grid 0,5 degree</a></li>
+                <li class="layer-toggle"><a class="" id="group4" href="#"><span></span>Regular grid 1 degree</a></li>
+            </ul>
+            <h2>Sources:</h2>
+            <ul class="sources">
+                <li>
+                    <a href="https://ourworldindata.org/co2-and-greenhouse-gas-emissions">Global Carbon Budget (2023)</a>
+                </li>
+                <li>
+                    <a href="https://data.ceda.ac.uk/neodc/esacci/land_cover/data/land_cover_maps/v2.0.7">ESA Climate Change Initiative - Land Cover led by UCLouvain (2017)</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <script src="index.js"></script>
+</body>
+</html>
