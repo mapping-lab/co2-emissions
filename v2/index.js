@@ -4,7 +4,7 @@ const nFormat = new Intl.NumberFormat(undefined, {minimumFractionDigits: 0});
 
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/carolpos/cm045jwfw00du01ph2cxi30j9' // stylesheet location
+    style: 'mapbox://styles/carolpos/cm0461l0f00ea01plat5nafeu' // stylesheet location
 });
 
 var mapLayers = {
